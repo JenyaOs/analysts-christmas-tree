@@ -12,6 +12,7 @@ import {
 import { getTaskPhase } from "@/lib/answers";
 import { TreeScene, type Ornament } from "@/components/TreeScene";
 import { Countdown } from "@/components/Countdown";
+import { OrnamentGlyph, TASK_SHAPE_NAMES, taskPalette } from "@/components/ornamentShapes";
 
 export const dynamic = "force-dynamic";
 
@@ -175,6 +176,43 @@ export default async function HomePage() {
             <p className="mt-2 text-xs leading-relaxed text-cream-100/55">{item.text}</p>
           </div>
         ))}
+      </section>
+
+      {/* ---------- Формы игрушек по заданиям ---------- */}
+      <section className="surface p-4 sm:p-5">
+        <div className="flex flex-wrap items-end justify-between gap-2">
+          <div>
+            <p className="eyebrow">Разнообразие форм</p>
+            <h2 className="section-title mt-1.5">12 заданий — 12 форм игрушек</h2>
+            <p className="mt-1 max-w-xl text-[11px] leading-relaxed text-cream-100/50">
+              Каждое задание приносит на ёлку свою форму: от письма Деду Морозу до снежинки в финале. Цвет и форма
+              подсказывают, за какое задание игрушка попала на ветку.
+            </p>
+          </div>
+          <span className="chip chip-muted">игрушка = принятый ответ</span>
+        </div>
+        <ul className="mt-4 grid grid-cols-3 gap-2 sm:grid-cols-4 lg:grid-cols-6">
+          {Object.entries(TASK_SHAPE_NAMES).map(([number, shapeName]) => {
+            const taskNumber = Number(number);
+            const palette = taskPalette(taskNumber);
+            return (
+              <li
+                key={number}
+                className="flex items-center gap-2 rounded-xl border border-cream-100/8 bg-cream-100/4 px-2 py-2"
+              >
+                <span className="shrink-0">
+                  <OrnamentGlyph taskNumber={taskNumber} id={taskNumber + 900} size={30} likes={taskNumber} />
+                </span>
+                <span className="min-w-0">
+                  <span className="block text-[10px] font-bold uppercase tracking-[0.1em]" style={{ color: palette.light }}>
+                    №{taskNumber}
+                  </span>
+                  <span className="block truncate text-[11px] text-cream-100/65">{shapeName}</span>
+                </span>
+              </li>
+            );
+          })}
+        </ul>
       </section>
 
       {/* ---------- Что внутри игры ---------- */}

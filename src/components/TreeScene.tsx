@@ -158,46 +158,77 @@ function layoutOrnaments(ornaments: Ornament[]): Placed[] {
 function Garland({ activity }: { activity: number }) {
   const opacity = 0.3 + activity * 0.6;
   const glow = 3 + activity * 9;
+
+  // Высота гирлянды по всей ёлке
+  const levels = [0.16, 0.27, 0.38, 0.49, 0.60, 0.71, 0.82, 0.88];
+
   return (
     <g>
-      {[0.33, 0.45, 0.57, 0.69, 0.8].map((y, index) => {
-        const hw = treeHalfWidth(y) * 0.95 * 100;
+      {levels.map((y, index) => {
+        // Ширина ёлки: viewBox имеет ширину 200
+        const hw = treeHalfWidth(y) * 0.95 * 200;
         const start = CX - hw;
         const end = CX + hw;
-        const segments = 8;
+        const segments = 12;
+
         const points: Array<{ x: number; y: number }> = [];
+
         for (let i = 0; i <= segments; i += 1) {
           const t = i / segments;
+
           points.push({
             x: start + (end - start) * t,
-            y: y * 100 + Math.sin(Math.PI * t) * 2.2 - (i % 2 === 0 ? 0.9 : 0),
+            // Высота SVG — 262, а не 100
+            y:
+              y * 262 +
+              Math.sin(Math.PI * t) * 5 -
+              (i % 2 === 0 ? 1 : 0),
           });
         }
+
         return (
           <g key={y}>
             <polyline
-              points={points.map((point) => `${point.x.toFixed(2)},${point.y.toFixed(2)}`).join(" ")}
+              points={points
+                .map(
+                  (point) =>
+                    `${point.x.toFixed(2)},${point.y.toFixed(2)}`
+                )
+                .join(" ")}
               fill="none"
               stroke="#d5ffa1"
-              strokeWidth={0.85}
+              strokeWidth={1.2}
               strokeLinecap="round"
               opacity={opacity}
               className="garland-line"
-              style={{ filter: `drop-shadow(0 0 ${glow}px rgba(213,255,161,0.8))` }}
+              style={{
+                filter: `drop-shadow(0 0 ${glow}px rgba(213,255,161,0.8))`,
+              }}
             />
+
             {points.map((point, pointIndex) => (
               <circle
                 key={`${point.x}-${pointIndex}`}
                 cx={point.x}
                 cy={point.y + 0.6}
-                r={pointIndex % 2 === 0 ? 0.95 : 0.68}
-                fill={pointIndex % 3 === 0 ? "#ffe3a6" : "#ffcb6b"}
+                r={pointIndex % 2 === 0 ? 1.1 : 0.8}
+                fill={
+                  pointIndex % 3 === 0
+                    ? "#ffe3a6"
+                    : "#ffcb6b"
+                }
                 opacity={0.55 + activity * 0.45}
                 className="garland-dot"
                 style={{
                   filter: `drop-shadow(0 0 ${glow}px rgba(255,203,107,0.85))`,
-                  animationDelay: `${(pointIndex * 0.28 + index * 0.4).toFixed(2)}s`,
-                  animationDuration: `${(1.8 + (pointIndex % 4) * 0.5).toFixed(2)}s`,
+                  animationDelay: `${(
+                    pointIndex * 0.28 +
+                    index * 0.4
+                  ).toFixed(2)}s`,
+                  animationDuration: `${(
+                    1.8 +
+                    (pointIndex % 4) * 0.5
+                  ).toFixed(2)}s`,
                 }}
               />
             ))}
@@ -207,6 +238,7 @@ function Garland({ activity }: { activity: number }) {
     </g>
   );
 }
+
 
 function RealisticFir({ activity }: { activity: number }) {
   return (

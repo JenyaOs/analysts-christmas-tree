@@ -62,14 +62,11 @@ export default async function TasksPage({
         </div>
         <h1 className="display-title mt-3 text-[clamp(1.9rem,4.6vw,3rem)]">Задания «Ёлки аналитиков»</h1>
         <p className="mt-3 max-w-2xl text-sm leading-relaxed text-cream-100/65">
-          Каждое принятое задание добавляет игрушку на общую виртуальную ёлку. Задания открываются строго по
-          календарю — в 00:00 по московскому времени: до этого момента форма заблокирована, но описание и внешний вид
-          формы можно изучить заранее.
+          Каждое принятое задание добавляет игрушку на общую виртуальную ёлку. 
         </p>
         <div className="mt-4 flex flex-wrap gap-1.5">
           <span className="chip chip-muted">Приём ответов: 30.11 — 25.12.2026</span>
           <span className="chip chip-muted">Пн · Ср · Пт — новое задание</span>
-          <span className="chip chip-gold">🔒 Открытие по календарю в 00:00 МСК</span>
         </div>
       </header>
 
@@ -101,26 +98,7 @@ export default async function TasksPage({
         </Link>
       </div>
 
-      {[1, 2, 3, 4].map((week) => {
-        const weekTasks = filtered.filter((task) => task.week === week);
-        if (weekTasks.length === 0) return null;
-        return (
-          <section key={week}>
-            <div className="mb-3 flex flex-wrap items-baseline gap-2">
-              <h2 className="text-sm font-bold uppercase tracking-[0.12em] text-gold-300">Неделя {week}</h2>
-              <span className="text-xs text-cream-100/45">
-                {weekTasks[0]?.weekTitle?.replace(/^Неделя \d\.\s*/, "")}
-              </span>
-            </div>
-            <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-              {weekTasks.map((task) => (
-                <TaskCard key={task.id} task={task} submissionStatus={statusByTask.get(task.id) ?? null} showWeek={false} />
-              ))}
-            </div>
-          </section>
-        );
-      })}
-
+     
       {filtered.length === 0 ? (
         <div className="surface p-8 text-center">
           <p className="text-3xl" aria-hidden="true">

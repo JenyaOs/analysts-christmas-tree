@@ -118,30 +118,7 @@ export default async function TasksPage({
         </div>
       ) : null}
 
-      <section className="surface p-5">
-        <div className="flex flex-wrap items-center justify-between gap-3">
-          <div>
-            <h2 className="text-sm font-bold uppercase tracking-[0.12em] text-lime-300">Дедлайны</h2>
-            <p className="mt-1 text-xs text-cream-100/55">
-              Ответы принимаются до 25 декабря. После этого — модерация, подведение итогов и финальная сияющая ёлка
-              28–31 декабря.
-            </p>
-          </div>
-          <div className="flex flex-wrap gap-1.5">
-            {(["open", "upcoming", "closed"] as TaskPhase[]).map((phase) => (
-              <span key={phase} className="chip chip-muted">
-                {PHASE_LABELS[phase]}: {counts[phase] ?? 0}
-              </span>
-            ))}
-          </div>
-        </div>
-        <div className="mt-3 grid gap-2 text-[11px] text-cream-100/45 sm:grid-cols-2 lg:grid-cols-3">
-          {tasks.map((task) => (
-            <p key={task.id}>
-              №{task.number} · до {formatDateTime(task.closesAt)}
-            </p>
-          ))}
-        </div>
+      
       </section>
     </div>
   );

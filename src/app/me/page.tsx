@@ -124,14 +124,9 @@ export default async function ProfilePage() {
           <div className="flex flex-wrap items-end justify-between gap-2">
             <div>
               <h2 className="section-title">Мои задания</h2>
-              <p className="mt-1 text-[11px] text-cream-100/45">
-                {openCount} открыто сейчас · формы доступны только участникам · открытие в 00:00 МСК
-              </p>
+              
             </div>
-            <Link href="/tasks" className="text-[11px] text-lime-300 link-underline">
-              Весь каталог →
-            </Link>
-          </div>
+           </div>
 
           <div className="mt-4 space-y-4">
             {weeks.map((week) => (

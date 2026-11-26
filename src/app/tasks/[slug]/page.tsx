@@ -86,9 +86,7 @@ export default async function TaskPage({ params }: { params: Promise<{ slug: str
           </div>
           <p className="eyebrow mt-4">Задание № {task.number} · {task.tool}</p>
           <h1 className="display-title mt-2 text-[clamp(1.9rem,4.4vw,3.1rem)]">{task.title}</h1>
-          <p className="mt-2 text-xs text-cream-100/50">
-            {task.weekTitle} · {task.dateLabel} · приём ответов до {formatDateTime(task.closesAt)}
-          </p>
+        
 
           {phase === "upcoming" ? (
             <div className="mt-4 flex flex-wrap items-center gap-3 rounded-2xl border border-gold-300/25 bg-gold-300/8 p-3">
@@ -98,9 +96,6 @@ export default async function TaskPage({ params }: { params: Promise<{ slug: str
               <div>
                 <p className="text-[10px] font-bold uppercase tracking-[0.14em] text-gold-300">
                   Задание заблокировано до даты открытия
-                </p>
-                <p className="mt-0.5 text-xs text-cream-100/65">
-                  Откроется {formatDateTime(task.publishAt)} — ровно в 00:00 МСК.
                 </p>
               </div>
               <Countdown target={task.publishAt} className="ml-auto" />
